@@ -9,7 +9,7 @@ const monsterStats = document.querySelector("#monsterStats");
 const monsterName = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
-export {
+export default {
   button1,
   button2,
   button3,
