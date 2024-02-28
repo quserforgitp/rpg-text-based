@@ -1,3 +1,5 @@
+import { monsters } from "./modules/consts.js";
+
 let xp = 0;
 let health = 100;
 let gold = 50;
@@ -22,23 +24,7 @@ const weapons = [
   { name: "claw hammer", power: 50 },
   { name: "sword", power: 100 },
 ];
-const monsters = [
-  {
-    name: "slime",
-    level: 2,
-    health: 15,
-  },
-  {
-    name: "fanged beast",
-    level: 8,
-    health: 60,
-  },
-  {
-    name: "dragon",
-    level: 20,
-    health: 300,
-  },
-];
+
 const locations = [
   {
     name: "town square",
