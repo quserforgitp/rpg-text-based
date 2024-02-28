@@ -15,5 +15,11 @@ const monsters = [
     health: 300,
   },
 ];
+const weapons = [
+  { name: "stick", power: 5 },
+  { name: "dagger", power: 30 },
+  { name: "claw hammer", power: 50 },
+  { name: "sword", power: 100 },
+];
 
-export { monsters };
+export { monsters, weapons };

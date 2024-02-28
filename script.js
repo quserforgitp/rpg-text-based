@@ -1,4 +1,4 @@
-import { monsters } from "./modules/consts.js";
+import { monsters, weapons } from "./modules/consts.js";
 
 let xp = 0;
 let health = 100;
@@ -18,12 +18,6 @@ const goldText = document.querySelector("#goldText");
 const monsterStats = document.querySelector("#monsterStats");
 const monsterName = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
-const weapons = [
-  { name: "stick", power: 5 },
-  { name: "dagger", power: 30 },
-  { name: "claw hammer", power: 50 },
-  { name: "sword", power: 100 },
-];
 
 const locations = [
   {
