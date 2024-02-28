@@ -1,3 +1,6 @@
+import { monsters, weapons } from "./modules/consts.js";
+import DOMrefs from "./modules/DOMrefs.js";
+
 let xp = 0;
 let health = 100;
 let gold = 50;
@@ -6,39 +9,6 @@ let fighting;
 let monsterHealth;
 let inventory = ["stick"];
 
-const button1 = document.querySelector("#button1");
-const button2 = document.querySelector("#button2");
-const button3 = document.querySelector("#button3");
-const text = document.querySelector("#text");
-const xpText = document.querySelector("#xpText");
-const healthText = document.querySelector("#healthText");
-const goldText = document.querySelector("#goldText");
-const monsterStats = document.querySelector("#monsterStats");
-const monsterName = document.querySelector("#monsterName");
-const monsterHealthText = document.querySelector("#monsterHealth");
-const weapons = [
-  { name: "stick", power: 5 },
-  { name: "dagger", power: 30 },
-  { name: "claw hammer", power: 50 },
-  { name: "sword", power: 100 },
-];
-const monsters = [
-  {
-    name: "slime",
-    level: 2,
-    health: 15,
-  },
-  {
-    name: "fanged beast",
-    level: 8,
-    health: 60,
-  },
-  {
-    name: "dragon",
-    level: 20,
-    health: 300,
-  },
-];
 const locations = [
   {
     name: "town square",
@@ -99,19 +69,19 @@ const locations = [
 ];
 
 // initialize buttons
-button1.onclick = goStore;
-button2.onclick = goCave;
-button3.onclick = fightDragon;
+DOMrefs.button1.onclick = goStore;
+DOMrefs.button2.onclick = goCave;
+DOMrefs.button3.onclick = fightDragon;
 
 function update(location) {
-  monsterStats.style.display = "none";
-  button1.innerText = location["button text"][0];
-  button2.innerText = location["button text"][1];
-  button3.innerText = location["button text"][2];
-  button1.onclick = location["button functions"][0];
-  button2.onclick = location["button functions"][1];
-  button3.onclick = location["button functions"][2];
-  text.innerHTML = location.text;
+  DOMrefs.monsterStats.style.display = "none";
+  DOMrefs.button1.innerText = location["button text"][0];
+  DOMrefs.button2.innerText = location["button text"][1];
+  DOMrefs.button3.innerText = location["button text"][2];
+  DOMrefs.button1.onclick = location["button functions"][0];
+  DOMrefs.button2.onclick = location["button functions"][1];
+  DOMrefs.button3.onclick = location["button functions"][2];
+  DOMrefs.text.innerHTML = location.text;
 }
 
 function goTown() {
@@ -133,7 +103,7 @@ function buyHealth() {
     goldText.innerText = gold;
     healthText.innerText = health;
   } else {
-    text.innerText = "You do not have enough gold to buy health.";
+    DOMrefs.text.innerText = "You do not have enough gold to buy health.";
   }
 }
 
@@ -144,16 +114,16 @@ function buyWeapon() {
       currentWeapon++;
       goldText.innerText = gold;
       let newWeapon = weapons[currentWeapon].name;
-      text.innerText = "You now have a " + newWeapon + ".";
+      DOMrefs.text.innerText = "You now have a " + newWeapon + ".";
       inventory.push(newWeapon);
-      text.innerText += " In your inventory you have: " + inventory;
+      DOMrefs.text.innerText += " In your inventory you have: " + inventory;
     } else {
-      text.innerText = "You do not have enough gold to buy a weapon.";
+      DOMrefs.text.innerText = "You do not have enough gold to buy a weapon.";
     }
   } else {
-    text.innerText = "You already have the most powerful weapon!";
-    button2.innerText = "Sell weapon for 15 gold";
-    button2.onclick = sellWeapon;
+    DOMrefs.text.innerText = "You already have the most powerful weapon!";
+    DOMrefs.button2.innerText = "Sell weapon for 15 gold";
+    DOMrefs.button2.onclick = sellWeapon;
   }
 }
 
@@ -162,10 +132,10 @@ function sellWeapon() {
     gold += 15;
     goldText.innerText = gold;
     let currentWeapon = inventory.shift();
-    text.innerText = "You sold a " + currentWeapon + ".";
-    text.innerText += " In your inventory you have: " + inventory;
+    DOMrefs.text.innerText = "You sold a " + currentWeapon + ".";
+    DOMrefs.text.innerText += " In your inventory you have: " + inventory;
   } else {
-    text.innerText = "Don't sell your only weapon!";
+    DOMrefs.text.innerText = "Don't sell your only weapon!";
   }
 }
 
@@ -187,24 +157,24 @@ function fightDragon() {
 function goFight() {
   update(locations[3]);
   monsterHealth = monsters[fighting].health;
-  monsterStats.style.display = "block";
+  DOMrefs.monsterStats.style.display = "block";
   monsterName.innerText = monsters[fighting].name;
-  monsterHealthText.innerText = monsterHealth;
+  DOMrefs.monsterHealthText.innerText = monsterHealth;
 }
 
 function attack() {
-  text.innerText = "The " + monsters[fighting].name + " attacks.";
-  text.innerText +=
+  DOMrefs.text.innerText = "The " + monsters[fighting].name + " attacks.";
+  DOMrefs.text.innerText +=
     " You attack it with your " + weapons[currentWeapon].name + ".";
   health -= getMonsterAttackValue(monsters[fighting].level);
   if (isMonsterHit()) {
     monsterHealth -=
       weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
   } else {
-    text.innerText += " You miss.";
+    DOMrefs.text.innerText += " You miss.";
   }
   healthText.innerText = health;
-  monsterHealthText.innerText = monsterHealth;
+  DOMrefs.monsterHealthText.innerText = monsterHealth;
   if (health <= 0) {
     lose();
   } else if (monsterHealth <= 0) {
@@ -215,7 +185,7 @@ function attack() {
     }
   }
   if (Math.random() <= 0.1 && inventory.length !== 1) {
-    text.innerText += " Your " + inventory.pop() + " breaks.";
+    DOMrefs.text.innerText += " Your " + inventory.pop() + " breaks.";
     currentWeapon--;
   }
 }
@@ -231,7 +201,7 @@ function isMonsterHit() {
 }
 
 function dodge() {
-  text.innerText = "You dodge the attack from the " + monsters[fighting].name;
+  DOMrefs.text.innerText = "You dodge the attack from the " + monsters[fighting].name;
 }
 
 function defeatMonster() {
@@ -279,16 +249,16 @@ function pick(guess) {
   while (numbers.length < 10) {
     numbers.push(Math.floor(Math.random() * 11));
   }
-  text.innerText = "You picked " + guess + ". Here are the random numbers:\n";
+  DOMrefs.text.innerText = "You picked " + guess + ". Here are the random numbers:\n";
   for (let i = 0; i < 10; i++) {
-    text.innerText += numbers[i] + "\n";
+    DOMrefs.text.innerText += numbers[i] + "\n";
   }
   if (numbers.includes(guess)) {
-    text.innerText += "Right! You win 20 gold!";
+    DOMrefs.text.innerText += "Right! You win 20 gold!";
     gold += 20;
     goldText.innerText = gold;
   } else {
-    text.innerText += "Wrong! You lose 10 health!";
+    DOMrefs.text.innerText += "Wrong! You lose 10 health!";
     health -= 10;
     healthText.innerText = health;
     if (health <= 0) {
